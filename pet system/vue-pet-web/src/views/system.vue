@@ -58,12 +58,11 @@ export default {
   data() {
     return {
       activeNames: ["1"],
-      activeNames: ["2"],
+      activeNames: ["2"]
     };
   },
   methods: {
-    handleChange(val) {
-    }
+    handleChange(val) {}
   }
 };
 </script>
@@ -79,7 +78,7 @@ export default {
 }
 
 .el-aside {
-  background-color: #d3dce6;
+  background-color: black;
   color: #333;
   text-align: center;
   height: 100%;
@@ -88,6 +87,7 @@ export default {
 
 .el-main {
   background-color: #e9eef3;
+  /* height: 100vh; */
   color: #333;
   text-align: center;
   line-height: 160px;
@@ -96,7 +96,8 @@ export default {
 body > .el-container {
   margin-bottom: 40px;
 }
-
+.el-container{
+}
 .el-container:nth-child(5) .el-aside,
 .el-container:nth-child(6) .el-aside {
   line-height: 260px;
