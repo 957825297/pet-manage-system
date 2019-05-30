@@ -1,54 +1,71 @@
 <template>
-<div>
-<el-container>
-<el-header height='100px'>
-<h1>信息管理系统</h1>
-</el-header>
-<el-container>
-<el-aside width="200px">
-<el-menu :default-openeds="['1', '3']">
-<el-submenu index="1">
-<template slot="title">
-<i class="el-icon-message"></i>学生管理
-</template>
-<el-menu-item-group>
-<el-menu-item index="1-1">
-<router-link to="/system/studentsList">学生列表</router-link>
-</el-menu-item>
-<el-menu-item index="1-2">
-<router-link to="/system/addStudents">新增学生</router-link>
-</el-menu-item>
-</el-menu-item-group>
-</el-submenu>
-<el-submenu index="2">
-<template slot="title">
-<i class="el-icon-menu"></i>班级管理
-</template>
-<el-menu-item-group>
-<el-menu-item index="2-1">
-<router-link to="/system/classesList">班级列表</router-link>
-</el-menu-item>
-<el-menu-item index="2-2">
-<router-link to="/system/addClasses">新增班级</router-link>
-</el-menu-item>
-</el-menu-item-group>
-</el-submenu>
-</el-menu>
-</el-aside>
-<el-main>
-<div>
-<div>
-<router-view></router-view>
-</div>
-</div>
-</el-main>
-</el-container>
-</el-container>
-</div>
+  <div>
+    <el-container style="height:100vh;">
+      <el-header height="100px">
+        <h1>爱宠邦后台管理系统</h1>
+      </el-header>
+      <el-container>
+        <el-aside>
+          <div>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="平台" name="1">
+                <div class="texts">
+                  <el-link>用户管理</el-link>
+                </div>
+                <div class="texts">
+                  <el-link>门店管理</el-link>
+                </div>
+                <div class="texts">
+                  <el-link>宠主管理</el-link>
+                </div>
+                <div class="texts">
+                  <el-link>供应商管理</el-link>
+                </div>
+                <div class="texts">
+                  <el-link>退出登陆</el-link>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="门店" name="2">
+                <div class="texts">
+                  <el-link>门店申请</el-link>
+                </div>
+                <div class="texts">
+                  <el-link>商品管理</el-link>
+                </div>
+                <div class="texts">
+                  <el-link>服务管理</el-link>
+                </div>
+                <div class="texts">
+                  <el-link>订单管理</el-link>
+                </div>
+                <div class="texts">
+                  <el-link>评价</el-link>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+          </div>
+        </el-aside>
+        <el-main>内容</el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      activeNames: ["1"],
+      activeNames: ["2"],
+    };
+  },
+  methods: {
+    handleChange(val) {
+    }
+  }
+};
 </script>
 
 
@@ -65,6 +82,7 @@ export default {};
   background-color: #d3dce6;
   color: #333;
   text-align: center;
+  height: 100%;
   line-height: 200px;
 }
 
@@ -86,5 +104,10 @@ body > .el-container {
 
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
+}
+.texts {
+  display: flex;
+  justify-content: center;
+  height: 50px;
 }
 </style>
