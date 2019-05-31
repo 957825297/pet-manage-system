@@ -38,7 +38,9 @@
                   <el-link>服务管理</el-link>
                 </div>
                 <div class="texts">
-                  <el-link>订单管理</el-link>
+                  <el-link>
+                    <router-link to="/order">订单管理</router-link>
+                  </el-link>
                 </div>
                 <div class="texts">
                   <el-link>评价</el-link>
@@ -47,7 +49,9 @@
             </el-collapse>
           </div>
         </el-aside>
-        <el-main>内容</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -58,13 +62,11 @@ export default {
   data() {
     return {
       activeNames: ["1"],
-      activeNames: ["2"],
+      activeNames: ["2"]
     };
   },
   methods: {
-    handleChange(val) {
-      
-    }
+    handleChange(val) {}
   }
 };
 </script>
