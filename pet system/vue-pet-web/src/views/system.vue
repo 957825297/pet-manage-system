@@ -38,7 +38,9 @@
                   <el-link>服务管理</el-link>
                 </div>
                 <div class="texts">
-                  <el-link>订单管理</el-link>
+                  <el-link>
+                    <router-link to="/order">订单管理</router-link>
+                  </el-link>
                 </div>
                 <div class="texts">
                   <el-link>评价</el-link>
@@ -47,7 +49,9 @@
             </el-collapse>
           </div>
         </el-aside>
-        <el-main>内容</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -58,6 +62,10 @@ export default {
   data() {
     return {
       activeNames: ["1"],
+<<<<<<< HEAD
+=======
+      activeNames: ["2"]
+>>>>>>> e7d6cd01c29d8e64b017335693bea6b7f6d4a809
     };
   },
   methods: {
@@ -75,14 +83,12 @@ export default {
   text-align: center;
   line-height: 60px;
 }
-
 .el-aside {
   color: #333;
   text-align: center;
   height: 100%;
   line-height: 200px;
 }
-
 .el-main {
   background-color: #e9eef3;
   /* height: 100vh; */
@@ -90,18 +96,19 @@ export default {
   text-align: center;
   line-height: 160px;
 }
-
 body > .el-container {
   margin-bottom: 40px;
 }
+<<<<<<< HEAD
 .el-container{
     background-color: #32323d;
 }
+=======
+>>>>>>> e7d6cd01c29d8e64b017335693bea6b7f6d4a809
 .el-container:nth-child(5) .el-aside,
 .el-container:nth-child(6) .el-aside {
   line-height: 260px;
 }
-
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
 }
