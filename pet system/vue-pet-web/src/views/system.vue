@@ -62,10 +62,9 @@ export default {
   data() {
     return {
       activeNames: ["1"],
-<<<<<<< HEAD
-=======
+
       activeNames: ["2"]
->>>>>>> e7d6cd01c29d8e64b017335693bea6b7f6d4a809
+
     };
   },
   methods: {
@@ -94,17 +93,14 @@ export default {
   /* height: 100vh; */
   color: #333;
   text-align: center;
-  line-height: 160px;
 }
 body > .el-container {
   margin-bottom: 40px;
 }
-<<<<<<< HEAD
+
 .el-container{
     background-color: #32323d;
 }
-=======
->>>>>>> e7d6cd01c29d8e64b017335693bea6b7f6d4a809
 .el-container:nth-child(5) .el-aside,
 .el-container:nth-child(6) .el-aside {
   line-height: 260px;

@@ -11,9 +11,6 @@ export default new Router({
       path: '/',
       name: 'system',
       component: System,
-<<<<<<< HEAD
-      children:[]
-=======
       children: [
         {
           path: 'order',
@@ -21,7 +18,6 @@ export default new Router({
           component: () => import('./components/systems/petOwners/orders.vue')
         }
       ]
->>>>>>> e7d6cd01c29d8e64b017335693bea6b7f6d4a809
     },
 
     {
