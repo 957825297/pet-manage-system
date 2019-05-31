@@ -10,7 +10,8 @@ export default new Router({
     {
       path: '/',
       name: 'system',
-      component: System
+      component: System,
+      children:[]
     },
     {
       path: '/about',

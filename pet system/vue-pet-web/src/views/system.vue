@@ -7,7 +7,7 @@
       <el-container>
         <el-aside>
           <div>
-            <el-collapse v-model="activeNames" @change="handleChange">
+            <el-collapse v-model="activeNames" @change="handleChange" class="collapses">
               <el-collapse-item title="平台" name="1">
                 <div class="texts">
                   <el-link>用户管理</el-link>
@@ -26,7 +26,7 @@
                 </div>
               </el-collapse-item>
             </el-collapse>
-            <el-collapse v-model="activeNames" @change="handleChange">
+            <el-collapse v-model="activeNames" @change="handleChange"  class="collapses">
               <el-collapse-item title="门店" name="2">
                 <div class="texts">
                   <el-link>门店申请</el-link>
@@ -58,7 +58,6 @@ export default {
   data() {
     return {
       activeNames: ["1"],
-      activeNames: ["2"]
     };
   },
   methods: {
@@ -78,7 +77,6 @@ export default {
 }
 
 .el-aside {
-  background-color: black;
   color: #333;
   text-align: center;
   height: 100%;
@@ -97,6 +95,7 @@ body > .el-container {
   margin-bottom: 40px;
 }
 .el-container{
+    background-color: #32323d;
 }
 .el-container:nth-child(5) .el-aside,
 .el-container:nth-child(6) .el-aside {
@@ -111,4 +110,10 @@ body > .el-container {
   justify-content: center;
   height: 50px;
 }
+/* .collapses{
+  display: flex;
+  width: 100%;
+  justify-content:space-evenly;
+  background-color: #32323d;
+} */
 </style>
