@@ -49,9 +49,9 @@
       </el-table-column>
       <el-table-column label="商品数量" prop="num"></el-table-column>
     </el-table>
-    <div class="block">
+    <!-- <div class="block">
           <Paging @pageing="pageing" :pageDate="Page" :inputVal="user" :select="region"></Paging>
-    </div>
+    </div> -->
   </div>
 </template>
 
