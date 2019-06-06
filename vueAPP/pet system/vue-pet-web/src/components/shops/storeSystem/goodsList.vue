@@ -13,6 +13,12 @@
 </el-input>
   <el-table :data="Page.ServicesData" border style="width: 100%">
 <el-table-column fixed align= 'center'  prop="name" label="服务名称" width="140"></el-table-column>
+<el-table-column  align= 'center' prop="images" label="商品图片" width="200">
+        <template slot-scope="props">
+          <img :src="props.row.images" class="img">
+          <!-- <span>{{props.row.images}}</span> -->
+        </template>
+</el-table-column>
 <el-table-column align= 'center' prop="category" label="服务类别" width="140"></el-table-column>
 <el-table-column align= 'center' prop="cutting" label="适用规格" width="140"> </el-table-column>
 <el-table-column  align= 'center' prop="ServiceSpe" label="服务规格" width="140"></el-table-column>
@@ -44,6 +50,17 @@
     <el-form ref="form" :model="form" label-width="85px">
   <el-form-item label="服务名称">
     <el-input class="input" v-model="form.name"></el-input>
+  </el-form-item>
+  <el-form-item label="商品图片">
+    <el-upload
+      action="/goods/addImgs"
+      list-type="picture-card"
+      :on-success="handlePictureCardPreview">
+      <i class="el-icon-plus"></i>
+    </el-upload>
+    <el-dialog :visible.sync="dialogVisible" size="tiny">
+      <img width="100%" :src="dialogImageUrl" alt>
+    </el-dialog>
   </el-form-item>
   <el-form-item label="服务类别">
     <el-select v-model="form.category" placeholder="请选择服务类别">
@@ -128,8 +145,11 @@ export default {
         date: "",
         cutting: "",
         hours: "",
-        price: ""
-      }
+        price: "",
+        images: ""
+      },
+      dialogImageUrl: "",
+      dialogVisible: false
     };
   },
   methods: {
@@ -157,6 +177,9 @@ export default {
       this.changeCurrent(e);
       this.getServicesByPageAsync();
     },
+     handlePictureCardPreview(file, data, url) {
+      this.form.images = url[0].response.data.url;
+    }
   },
   mounted() {
     this.getServicesByPageAsync();
@@ -173,5 +196,9 @@ export default {
 }
 .cell{
   font-weight:bold;
+}
+.img{
+   width: 200px;
+   height: 200px;
 }
 </style>
