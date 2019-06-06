@@ -1,60 +1,59 @@
 <template>
-
-    <el-form ref="form" :model="form" label-width="85px" >
-  <el-form-item label="服务名称">
-    <el-input class="inputs " v-model="form.name" placeholder="请输入服务名称" ></el-input>
-  </el-form-item>
-  <el-form-item label="服务类别">
-    <el-select v-model="form.category" placeholder="请选择服务类别" >
-      <el-option  v-for="item in option1"
-      :key="item.value"
-      :value="item.value"></el-option>
-    </el-select>
-  </el-form-item>
-   <el-form-item label="服务规格">
-    <el-select v-model="form.ServiceSpe" placeholder="请选择服务规格" >
-      <el-option  v-for="item in option2"
-      :key="item.value"
-      :value="item.value"></el-option>
-    </el-select>
-  </el-form-item>
-   <el-form-item label="服务员等级">
-    <el-select v-model="form.waiterLevel" placeholder="请选择服务员等级" >
-      <el-option  v-for="item in option3"
-      :key="item.value"
-      :value="item.value"></el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item label="预约时间" >
-   <el-time-select
-   
-  v-model="form.date"
-  :picker-options="{
+  <el-form ref="form" :model="form" label-width="85px">
+    <el-form-item label="服务名称">
+      <el-input class="inputs" v-model="form.name" placeholder="请输入服务名称"></el-input>
+    </el-form-item>
+    <el-form-item label="服务类别">
+      <el-select v-model="form.category" placeholder="请选择服务类别">
+        <el-option v-for="item in option1" :key="item.value" :value="item.value"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="服务规格">
+      <el-select v-model="form.ServiceSpe" placeholder="请选择服务规格">
+        <el-option v-for="item in option2" :key="item.value" :value="item.value"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="服务员等级">
+      <el-select v-model="form.waiterLevel" placeholder="请选择服务员等级">
+        <el-option v-for="item in option3" :key="item.value" :value="item.value"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="预约时间">
+      <el-time-select
+        v-model="form.date"
+        :picker-options="{
     start: '07:00',
     step: '00:01',
     end: '20:30'
   }"
-  placeholder="选择时间">
-</el-time-select>
-  </el-form-item>
-   <el-form-item label="适用规格">
-    <el-select v-model="form.cutting" placeholder="请选择服务规格" >
-      <el-option  v-for="item in option4"
-      :key="item.value"
-      :value="item.value"></el-option>
-    </el-select>
-  </el-form-item>
+        placeholder="选择时间"
+      ></el-time-select>
+    </el-form-item>
+    <el-form-item label="适用规格">
+      <el-select v-model="form.cutting" placeholder="请选择服务规格">
+        <el-option v-for="item in option4" :key="item.value" :value="item.value"></el-option>
+      </el-select>
+    </el-form-item>
     <el-form-item label="用时">
-    <el-input type="text" class="inputs " v-model="form.hours" placeholder="请输入服务用时"></el-input>小时
-  </el-form-item>
+      <el-input type="text" class="inputs" v-model="form.hours" placeholder="请输入服务用时"></el-input>小时
+    </el-form-item>
     <el-form-item label="价格">
-    <el-input type="text" class="inputs el-input" v-model="form.price" placeholder="请输入服务价格"></el-input>元
-  </el-form-item>
-  <el-form-item>
-    <el-button  @click="onSubmit" class="fon">立即创建</el-button>
-  </el-form-item>
-</el-form>
-
+      <el-input type="text" class="inputs el-input" v-model="form.price" placeholder="请输入服务价格"></el-input>元
+    </el-form-item>
+    <el-upload
+      action="/service/addImgs"
+      list-type="picture-card"
+      :on-success="handlePictureCardPreview"
+    >
+      <i class="el-icon-plus"></i>
+    </el-upload>
+    <el-dialog :visible.sync="dialogVisible" size="tiny">
+      <img width="100%" :src="dialogImageUrl" alt>
+    </el-dialog>
+    <el-form-item>
+      <el-button @click="onSubmit" class="fon">立即创建</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -76,43 +75,51 @@ export default {
         date: "",
         cutting: "",
         hours: "",
-        price: ""
-      }
+        price: "",
+        images:""
+      },
+      dialogImageUrl: "",
+      dialogVisible: false
     };
   },
   methods: {
-       ...mapActions(["add"]),
+    ...mapActions(["add"]),
+    handlePictureCardPreview(file, data, url) {
+      this.form.images = url[0].response.data.url;
+    },
     onSubmit() {
-     this.add(this.form)
-        this.$confirm('是否新增?', '提示', {
-          confirmButtonText: '确定新增',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+      this.add(this.form);
+      this.$confirm("是否新增?", "提示", {
+        confirmButtonText: "确定新增",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
           this.$message({
-            type: 'success',
-            message: '新增成功!'
+            type: "success",
+            message: "新增成功!"
           });
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消新增'
-          });          
+            type: "info",
+            message: "已取消新增"
+          });
         });
-      }
     }
   }
+};
 </script>
 
-<style >       
+<style >
 .inputs {
   width: 220px;
-}       
-
-.el-form-item__label{
-  font-weight:bold
 }
-.fon{
-  font-weight:bold;
+
+.el-form-item__label {
+  font-weight: bold;
+}
+.fon {
+  font-weight: bold;
 }
 </style>

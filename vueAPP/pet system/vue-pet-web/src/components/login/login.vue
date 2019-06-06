@@ -27,10 +27,8 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-        <el-button type="primary">注册</el-button>
+        <el-button type="primary" @click="jumpReg">注册</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
-        <el-radio v-model="radio" label="1">后台管理</el-radio>
-        <el-radio v-model="radio" label="2">门店管理</el-radio>
       </el-form-item>
     </el-form>
   </div>
@@ -111,6 +109,9 @@ export default {
     resetForm(formName) {
       //重置所有
       this.$refs[formName].resetFields();
+    },
+    jumpReg(){
+      this.$router.push({path:'/reg'})
     }
   }
 };

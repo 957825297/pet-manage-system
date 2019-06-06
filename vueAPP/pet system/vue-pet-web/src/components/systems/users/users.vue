@@ -22,7 +22,7 @@
     </div>
     <span style="margin-left:80px;">
       <el-tooltip content="添加平台管理员" placement="top">
-          <el-button round icon="el-icon-user" plain  @click="dialogFormVisible = true">平台管理员</el-button>
+        <el-button round icon="el-icon-user" plain @click="dialogFormVisible = true">平台管理员</el-button>
       </el-tooltip>
     </span>
     <template>
@@ -112,7 +112,7 @@
       </el-table>
     </template>
 
-    <el-pagination background layout="prev, pager, next" :total="80"></el-pagination>
+    <Paging @pageing="pageing" :pageDate="pageDate" :inputVal="this.input" :select="select"></Paging>
 
     <el-dialog title="修改用户信息" :visible.sync="dialogTableVisible">
       <template>
@@ -234,7 +234,13 @@
     </el-dialog>
 
     <el-dialog title="添加{管理员 OR 门店管理员}" :visible.sync="dialogFormVisible">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleForm"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
         <el-form-item label="姓名:" prop="name">
           <el-input v-model="ruleForm.name" style="width:200px;"></el-input>
         </el-form-item>
@@ -245,7 +251,7 @@
           <el-input v-model="ruleForm.phone" style="width:200px;"></el-input>
         </el-form-item>
         <el-form-item prop="email" label="邮箱:">
-            <el-input v-model="ruleForm.email"></el-input>
+          <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
         <el-form-item label="密码:" prop="password">
           <el-input type="password" v-model="ruleForm.password" style="width:200px;"></el-input>
@@ -269,7 +275,6 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-
   </div>
 </template>
 
@@ -281,8 +286,11 @@ const {
   mapMutations,
   mapActions
 } = createNamespacedHelpers("users");
-
+import Paging from "../../paging";
 export default {
+  components: {
+    Paging
+  },
   // 数据源
   data() {
     return {
@@ -294,45 +302,51 @@ export default {
 
       dialogFormVisible: false,
       ruleForm: {
-        name: '',
-        loginName:'',
-        phone:'',
-        email:'',
-        password:'',
-        status: '',
-        shopsId:'',
-        character: false,
+        name: "",
+        loginName: "",
+        phone: "",
+        email: "",
+        password: "",
+        status: "",
+        shopsId: "",
+        character: false
       },
       rules: {
         name: [
-          { required: true, message: '请输入真实姓名(长度是3~5个字符)', trigger: 'blur' },
-          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+          {
+            required: true,
+            message: "请输入真实姓名(长度是3~5个字符)",
+            trigger: "blur"
+          },
+          { min: 2, max: 10, message: "长度在 2 到 10 个字符", trigger: "blur" }
         ],
         loginName: [
-          { required: true, message: '请输入微信号的名称', trigger: 'blur' },
-          { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+          { required: true, message: "请输入微信号的名称", trigger: "blur" },
+          { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" }
         ],
         phone: [
-          { required: true, message: '请输入手机号', trigger: 'change' },
-          { min: 11, max: 11, message: '长度为11位的*数字*', trigger: 'change' }
+          { required: true, message: "请输入手机号", trigger: "change" },
+          { min: 11, max: 11, message: "长度为11位的*数字*", trigger: "change" }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, message: '长度在 6 位以上的字符', trigger: 'blur' }
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 6, message: "长度在 6 位以上的字符", trigger: "blur" }
         ],
-        
-        email:[
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+
+        email: [
+          { required: true, message: "请输入邮箱地址", trigger: "blur" },
+          {
+            type: "email",
+            message: "请输入正确的邮箱地址",
+            trigger: ["blur", "change"]
+          }
         ],
-        status: [
-          { required: true, message: '不可漏选', trigger: 'change' }
-        ],
-      },
+        status: [{ required: true, message: "不可漏选", trigger: "change" }]
+      }
     };
   },
   computed: {
-    ...mapState(["pageDate", "serachData"])
+    ...mapState(["pageDate"])
   },
   mounted: function() {
     this.riductionAsync({
@@ -344,15 +358,16 @@ export default {
     ...mapMutations([
       "dataChange",
       "deleteItem",
-      "searchData",
       "ModifyingData",
       "addUsers",
+      "pageing",
     ]),
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
-          this.addUsers(this.ruleForm);          
-          this.dialogFormVisible=false
+          this.addUsers(this.ruleForm);
+          this.dialogFormVisible = false;
+          this.$refs[formName].resetFields();
           this.riductionAsync({
             currenPage: this.pageDate.currenPage,
             pageSize: this.pageDate.pageSize
@@ -365,7 +380,7 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    ...mapActions(["riductionAsync"]),
+    ...mapActions(["riductionAsync", 'searchDataAsync']),
     // 删除
     deleteRow(value) {
       this.deleteItem(value);
@@ -382,11 +397,11 @@ export default {
     },
     //搜索
     search() {
-      this.searchData({
+      this.searchDataAsync({
         type: this.select,
         data: this.input,
-        currenPage: this.serachData.currenPage,
-        pageSize: this.serachData.pageSize
+        currenPage: this.pageDate.currenPage,
+        pageSize: this.pageDate.pageSize
       });
     }
   }
@@ -425,7 +440,7 @@ export default {
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
 }
-.demo-ruleForm{
+.demo-ruleForm {
   display: flex;
   flex-wrap: wrap;
 }

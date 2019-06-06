@@ -9,23 +9,40 @@ export default {
             totalCount: 0,   //总条数                                                                                                                                    
             usersData: []  //数据存放位置
         },
-        serachData: {
-            currenPage: 1,  //当前页
-            pageSize: 5,    //每页显示条数
-            totalPage: 0,    //总页数
-            totalCount: 0,   //总条数 
-        },
-        userData:{}
     },
     mutations: {
-        upDate(state,user){
-            console.log("asdasdasdasda");
-            
-            state.userData = user;
-        },
         minusPrice(state, padyload) {
             console.log(padyload);
             state.pageDate = padyload;
+        },
+        pageing(state, value) {
+            console.log(value);
+            console.log(value.data == "");
+            if (value.data == "") {
+                axios({
+                    method: "get",
+                    url: "users/getUsersByPage",
+                    params: {
+                        currenPage: value.currenPage, pageSize: value.pageSize
+                    }
+                })
+                    .then((res) => {
+                        state.pageDate = res.data
+                    })
+            } else {
+                axios({
+                    method: "get",
+                    url: "users/fuzzyQuery",
+                    params: {
+                        type: value.type, data: value.data, currenPage: value.currenPage, pageSize: value.pageSize,
+                        totalPage: value.totalPage, totalCount: value.totalCount,
+                    }
+                })
+                    .then((res) => {
+                        console.log(res.data);
+                        state.pageDate = res.data
+                    })
+            }
         },
         addUsers(state, value) {
             axios({
@@ -76,24 +93,14 @@ export default {
                 }
             })
                 .then((res) => {
-                    // this.riductionAsync();
                     console.log(res.data);
                 })
         },
         searchData(state, value) {
-            axios({
-                method: "get",
-                url: "users/fuzzyQuery",
-                params: {
-                    type: value.type, data: value.data, currenPage: value.currenPage, pageSize: value.pageSize
-                }
-            })
-                .then((res) => {
-                    state.pageDate.usersData = res.data.usersData
-                    state.searchData = res.data
-                    console.log(res.data);
-                })
-        },
+            Object.assign(state.pageDate, value);
+            // state.pageDate.totalCount = value.usersData.length;
+            // console.log('state', state);
+        }
     },
     actions: {
         riductionAsync(context, value) {
@@ -108,6 +115,20 @@ export default {
                     context.commit("minusPrice", res.data);
                 })
         },
+        searchDataAsync(context, value) {
+            axios({
+                method: "get",
+                url: "users/fuzzyQuery",
+                params: {
+                    type: value.type, data: value.data, currenPage: value.currenPage, pageSize: value.pageSize
+                }
+            })
+                .then((res) => {
+                    // state.pageDate = res.data
+                    // console.log(res.data);
+                    context.commit("searchData", res.data);
+                })
+            },
         addname(context, ruleForm) {
             axios({
                 method: "get",
@@ -128,3 +149,5 @@ export default {
         }
     },
 }
+
+

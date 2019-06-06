@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+const { uploadFile } = require('../util/upload');//图片上传后台插件工具
 
-const {addServices,getServices,getServicesByPage,
-    deleteServiceById,searchServer,serviceUpdate } = require("../service/serversService.js");
+const { addServices, getServices, getServicesByPage,
+    deleteServiceById, searchServer, serviceUpdate } = require("../service/serversService.js");
 
 router.post('/addServices', async (req, res) => {
     res.send(await addServices(req.body));
@@ -27,5 +28,14 @@ router.get('/searchServer', async function (req, res, next) {
 
 router.get('/serviceUpdate', async function (req, res, next) {
     res.send(await serviceUpdate(req.query));
-  });
+});
+
+//图片上传 (默认post),不操作数据库
+router.post('/addImgs', async function (req, res, next) {
+    const data = await uploadFile(req, res, {
+        fileType: "students",
+        path: "./public/img"
+    })
+    res.send(data);
+});
 module.exports = router;

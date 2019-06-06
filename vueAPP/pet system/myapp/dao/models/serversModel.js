@@ -9,6 +9,7 @@ const serviceSchema = new mongoose.Schema({
     hours:String,//耗时（XX小时）
     waiterLevel:String,// 服务员等级（普通，高级）12
     price:String,//价格（如：会员价9折）
+    images:String,//图片（小，大）
 })
 
 mongoose.model("serviceModel", serviceSchema, "service");

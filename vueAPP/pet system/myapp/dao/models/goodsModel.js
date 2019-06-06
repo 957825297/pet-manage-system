@@ -21,9 +21,7 @@ const goodsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'suppliersModel'
     },//供应商
-    images:[{
-        type:String,//图片（小，大）
-    }],
+    images:String,//图片（小，大）
     price:String,//价格
 
 })
